@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Calendario Unni U12</title>
 <meta name="description" content="Calendario Under 12 dell'ASD Rugby Valcuvia (Gli Unni), stagione 2026/27: orari, campi e indicazioni.">
-<meta name="theme-color" content="#1E6A45">
+<meta name="theme-color" content="#16B4E4">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-180.png">
@@ -15,19 +15,23 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
 <style>
 :root{
-  --bg:#F2F5EF; --surface:#FFFFFF; --ink:#16241B; --muted:#5A6B60; --line:#D5DED2;
-  --pitch:#1E6A45; --pitch-soft:#E3EFE6; --accent:#B87400; --accent-soft:#FBF0D9; --warn:#A3321F;
+  /* colori sociali Unni: maglia ciano, pantaloncini blu */
+  --cyan:#16B4E4; --navy:#0D2F6B;
+  --bg:#EEF5F9; --surface:#FFFFFF; --ink:#0B1E3A; --muted:#4E6379; --line:#CFE0EA;
+  --pitch:#0D2F6B; --pitch-soft:#D8F1FA; --accent:#00729B; --accent-soft:#DDF4FC; --warn:#A3321F;
   --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
   --body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
   :root{color-scheme:dark;
-    --bg:#0E1611; --surface:#16211A; --ink:#E6EEE8; --muted:#9BAEA2; --line:#2A3A30;
-    --pitch:#63C28E; --pitch-soft:#1C3325; --accent:#F0B43C; --accent-soft:#3A2E12; --warn:#F08A76;}
+    --cyan:#2EC4F0; --navy:#1B4A9C;
+    --bg:#08121F; --surface:#0F1C2E; --ink:#E4EEF6; --muted:#9AB0C4; --line:#223650;
+    --pitch:#5FD3F5; --pitch-soft:#12304A; --accent:#5FD3F5; --accent-soft:#0F3348; --warn:#F08A76;}
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
+.kit{height:10px;background:linear-gradient(var(--cyan) 0 60%,var(--navy) 60% 100%)}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45;
   padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -45,7 +49,7 @@ section{display:flex;flex-direction:column;gap:12px}
 h2{font-family:var(--display);font-weight:700;font-size:22px;margin:0;color:var(--muted);letter-spacing:.02em}
 .list{display:flex;flex-direction:column;gap:12px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;grid-template-columns:62px 1fr;gap:14px}
-.card.next{border:2px solid var(--accent);box-shadow:0 8px 24px -14px rgba(0,0,0,.4)}
+.card.next{border:2px solid var(--cyan);box-shadow:0 8px 24px -14px rgba(0,0,0,.4)}
 .card.tbd{background:transparent;border-style:dashed}
 .date{display:flex;flex-direction:column;align-items:center;background:var(--pitch-soft);border-radius:10px;padding:8px 0;font-family:var(--display);text-transform:uppercase;height:max-content}
 .tbd .date{background:transparent;border:1px solid var(--line)}
@@ -79,6 +83,7 @@ footer p{margin:0}
 </style>
 </head>
 <body>
+<div class="kit" aria-hidden="true"></div>
 <div class="wrap">
   <header>
     <div class="eyebrow">ASD Rugby Valcuvia · Gli Unni</div>
