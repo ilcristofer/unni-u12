@@ -19,6 +19,7 @@
   --cyan:#16B4E4; --navy:#0D2F6B;
   --bg:#EEF5F9; --surface:#FFFFFF; --ink:#0B1E3A; --muted:#4E6379; --line:#CFE0EA;
   --pitch:#0D2F6B; --pitch-soft:#D8F1FA; --accent:#00729B; --accent-soft:#DDF4FC; --warn:#A3321F;
+  --home-bg:#E2F6FD; --on-cyan:#0B2659;
   --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
   --body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   color-scheme:light;
@@ -27,7 +28,8 @@
   :root{color-scheme:dark;
     --cyan:#2EC4F0; --navy:#1B4A9C;
     --bg:#08121F; --surface:#0F1C2E; --ink:#E4EEF6; --muted:#9AB0C4; --line:#223650;
-    --pitch:#5FD3F5; --pitch-soft:#12304A; --accent:#5FD3F5; --accent-soft:#0F3348; --warn:#F08A76;}
+    --pitch:#5FD3F5; --pitch-soft:#12304A; --accent:#5FD3F5; --accent-soft:#0F3348; --warn:#F08A76;
+    --home-bg:#0E2A3D; --on-cyan:#061220;}
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -48,7 +50,12 @@ main{display:flex;flex-direction:column;gap:24px}
 section{display:flex;flex-direction:column;gap:12px}
 h2{font-family:var(--display);font-weight:700;font-size:22px;margin:0;color:var(--muted);letter-spacing:.02em}
 .list{display:flex;flex-direction:column;gap:12px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;grid-template-columns:62px 1fr;gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;grid-template-columns:62px 1fr;gap:14px;overflow:hidden}
+.card.home{background:var(--home-bg);border-color:var(--cyan)}
+.card.home .date{background:var(--cyan);color:var(--on-cyan)}
+.card.home .date .dow,.card.home .date .mon{color:var(--on-cyan)}
+.home-ribbon{grid-column:1/-1;margin:-16px -16px 0;padding:9px 16px;background:var(--cyan);color:var(--on-cyan);font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.home-ribbon svg{width:20px;height:20px;flex:none}
 .card.next{border:2px solid var(--cyan);box-shadow:0 8px 24px -14px rgba(0,0,0,.4)}
 .card.tbd{background:transparent;border-style:dashed}
 .date{display:flex;flex-direction:column;align-items:center;background:var(--pitch-soft);border-radius:10px;padding:8px 0;font-family:var(--display);text-transform:uppercase;height:max-content}
@@ -144,6 +151,7 @@ const parse=s=>{const[y,m,d]=(s||"").split("-").map(Number);return new Date(y||2
 const todayD=()=>{const t=new Date();return new Date(t.getFullYear(),t.getMonth(),t.getDate())};
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const ICON_CAR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>';
+const ICON_HOME='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>';
 const ICON_PIN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
 
 // ---- lettura del foglio (Google Visualization API, via JSONP: nessun problema di CORS) ----
@@ -220,7 +228,7 @@ function cardHTML(e,isNext){
   const dateBlock=e.daDefinire||e.giorni
     ?`<div class="date"><span class="dow">sab/dom</span><span class="day sm">${esc(e.giorni||d.getDate())}</span><span class="mon">${MON[d.getMonth()]}</span></div>`
     :`<div class="date"><span class="dow">${DOW[d.getDay()]}</span><span class="day">${d.getDate()}</span><span class="mon">${MON[d.getMonth()]}</span></div>`;
-  const badges=(isNext?'<span class="badge">Prossimo</span>':"")+(e.casa?'<span class="badge home">In casa</span>':"");
+  const badges=(isNext?'<span class="badge">Prossimo</span>':"");
   if(e.daDefinire){
     return `<article class="card tbd">${dateBlock}<div class="body">
       <div class="top"><span class="gname">${esc(e.titolo)}</span>${badges}</div>
@@ -234,7 +242,8 @@ function cardHTML(e,isNext){
   const bring=bringList(e.portare);
   const contro=(e.contro||"").split(/[;\n]/).map(s=>s.trim()).filter(Boolean);
   const meta=[e.ospita&&!e.casa?"Ospita "+e.ospita:"",e.squadra].filter(Boolean).join(" · ");
-  return `<article class="card${isNext?" next":""}">${dateBlock}<div class="body">
+  const ribbon=e.casa?`<div class="home-ribbon">${ICON_HOME}Si gioca in casa</div>`:"";
+  return `<article class="card${isNext?" next":""}${e.casa?" home":""}">${ribbon}${dateBlock}<div class="body">
     <div class="top"><span class="gname">${esc(e.titolo)}</span>${badges}</div>
     <p class="place">${esc(e.luogo)}</p>
     ${e.ora?`<div class="time">${esc(e.ora)} <span>${esc(e.oraNota)}</span></div>`:""}
