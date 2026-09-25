@@ -80,6 +80,15 @@ details.played summary{cursor:pointer;font-family:var(--display);font-weight:700
 details.played .list{margin-top:12px;opacity:.6}
 footer{color:var(--muted);font-size:13px;display:flex;flex-direction:column;gap:6px}
 footer p{margin:0}
+.install{background:var(--surface);border:1.5px solid var(--cyan);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.install b{font-family:var(--display);font-size:20px;font-weight:700}
+.install p{margin:2px 0 0;color:var(--muted);font-size:15px}
+.btn{font:inherit;font-weight:600;font-size:15px;cursor:pointer;background:transparent}
+.install-help{border-top:1px solid var(--line);padding-top:12px;font-size:15px;display:flex;flex-direction:column;gap:8px}
+.install-help ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.install-help .tip{font-size:14px;color:var(--muted);margin:0}
+.install-help svg{width:18px;height:18px;vertical-align:-3px;color:var(--pitch)}
+.linkbtn{font:inherit;font-size:13px;color:var(--pitch);background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
 </style>
 </head>
 <body>
@@ -90,10 +99,18 @@ footer p{margin:0}
     <h1>Under 12 · 2026/27</h1>
     <p class="stamp" id="stamp"></p>
   </header>
+  <section class="install" id="install" hidden>
+    <div><b>Tieni il calendario sul telefono</b><p>Un'icona nella schermata Home, che si apre come un'app.</p></div>
+    <div class="actions">
+      <button class="btn primary" id="install-btn" type="button">Aggiungi alla Home</button>
+      <button class="btn" id="install-close" type="button">Non ora</button>
+    </div>
+    <div class="install-help" id="install-help" hidden></div>
+  </section>
   <div id="avviso"></div>
   <main id="main"></main>
   <footer>
-    <p>Per avere la pagina sempre a portata di mano: dal browser del telefono scegli «Aggiungi a schermata Home».</p>
+    <p id="install-again" hidden><button class="linkbtn" type="button" id="install-reopen">Aggiungi il calendario alla schermata Home</button></p>
     <p>La pagina controlla da sola gli aggiornamenti ogni pochi minuti.</p>
   </footer>
 </div>
@@ -261,6 +278,45 @@ refresh();
 setInterval(()=>{if(document.visibilityState==="visible")refresh()},REFRESH_MS);
 document.addEventListener("visibilitychange",()=>{
   if(document.visibilityState==="visible"&&(!lastOk||Date.now()-lastOk>60000))refresh();
+});
+
+// ---- aggiungi alla schermata Home ----
+if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
+const ua=navigator.userAgent;
+const isIOS=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+const isAndroid=/Android/i.test(ua);
+const inApp=/FBAN|FBAV|Instagram|WhatsApp|Line\/|; wv\)/i.test(ua);
+const standalone=()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+const box=document.getElementById("install"), help=document.getElementById("install-help"), again=document.getElementById("install-again");
+let deferred=null;
+const SHARE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Condividi"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>';
+const DOTS='<b aria-label="menu">⋮</b>';
+const WA='<p class="tip">Se hai aperto il link da WhatsApp o da un\'altra app, prima apri la pagina nel browser: dal menu scegli «Apri in Safari» o «Apri in Chrome».</p>';
+function helpHTML(){
+  if(isIOS) return `<ol><li>Tocca il pulsante Condividi ${SHARE} (in basso in Safari, in alto a destra in Chrome).</li>
+    <li>Scorri e scegli <b>«Aggiungi alla schermata Home»</b>.</li><li>Tocca <b>«Aggiungi»</b>.</li></ol>${WA}`;
+  if(isAndroid) return `<ol><li>Tocca il menu ${DOTS} in alto a destra del browser.</li>
+    <li>Scegli <b>«Aggiungi a schermata Home»</b> oppure <b>«Installa app»</b>.</li><li>Conferma con <b>«Aggiungi»</b>.</li></ol>${WA}`;
+  return `<p style="margin:0">Apri questo link dal browser del telefono e tocca di nuovo «Aggiungi alla Home».</p>`;
+}
+let hidden=false; try{hidden=localStorage.getItem("unni-install-hide")==="1"}catch(e){}
+function showBox(v){ box.hidden=!v; again.hidden=v||standalone(); }
+if(!standalone()) showBox(!hidden);
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferred=e;});
+window.addEventListener("appinstalled",()=>{deferred=null;box.hidden=true;again.hidden=true;});
+document.getElementById("install-btn").addEventListener("click",async()=>{
+  if(deferred&&!inApp){
+    deferred.prompt();
+    try{const r=await deferred.userChoice; if(r&&r.outcome==="accepted"){box.hidden=true;again.hidden=true;}}catch(e){}
+    deferred=null; return;
+  }
+  help.innerHTML=helpHTML(); help.hidden=!help.hidden;
+});
+document.getElementById("install-close").addEventListener("click",()=>{
+  try{localStorage.setItem("unni-install-hide","1")}catch(e){} help.hidden=true; showBox(false);
+});
+document.getElementById("install-reopen").addEventListener("click",()=>{
+  try{localStorage.removeItem("unni-install-hide")}catch(e){} showBox(true); box.scrollIntoView({behavior:"smooth",block:"center"});
 });
 })();
 </script>
