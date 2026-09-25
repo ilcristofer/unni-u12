@@ -123,11 +123,11 @@ const REFRESH_MS=5*60*1000;
 // Copia di riserva: usata solo se il foglio non si raggiunge e non c'è una copia salvata sul telefono.
 const FALLBACK={avviso:"",eventi:[
  {titolo:"Prima partita",data:"2026-09-26",giorni:"",ora:"14:30",oraNota:"ritrovo in campo, già cambiati",luogo:"Gattico",ospita:"Rugby Gattico",campo:"Campo sportivo di Gattico",indirizzo:"Via Mazzini, 28013 Gattico NO",squadra:"",note:"Calcolate voi quanto prima arrivare per essere pronti in campo alle 14:30. La società dà solo la maglietta da gioco.",portare:"Pantaloncini; Calzettoni; Paradenti (obbligatorio); Scarpe coi tacchetti; Documento d'identità (è la prima partita)",casa:false,daDefinire:false},
- {titolo:"Giornata 1",data:"2026-10-11",giorni:"",ora:"10:00",oraNota:"inizio gare",luogo:"Cesano Boscone",ospita:"Cinghiali Rugby Cesano Boscone",campo:"Campo Cinghiali Rugby",indirizzo:"Via Don Luigi Sturzo 1A, 20090 Cesano Boscone MI",squadra:"Giochiamo insieme all'Amatori Tradate",note:"",portare:"",casa:false,daDefinire:false},
- {titolo:"Giornata 2",data:"2026-10-25",giorni:"",ora:"10:30",oraNota:"inizio gare",luogo:"Tradate",ospita:"Amatori Tradate Rugby",campo:"Centro sportivo C. M. Uslenghi",indirizzo:"Via Alfio Fontana, 21049 Tradate VA",squadra:"Giochiamo insieme all'Amatori Tradate",note:"",portare:"",casa:false,daDefinire:false},
- {titolo:"Giornata 3",data:"2026-11-08",giorni:"",ora:"10:30",oraNota:"inizio gare",luogo:"Cassano Valcuvia",ospita:"Rugby Valcuvia",campo:"Campo di via Noga",indirizzo:"Via Noga 525, 21030 Cassano Valcuvia VA",squadra:"Giochiamo insieme all'Amatori Tradate",note:"",portare:"",casa:true,daDefinire:false},
- {titolo:"Giornata 4",data:"2026-11-22",giorni:"",ora:"10:00",oraNota:"inizio gare",luogo:"Varese",ospita:"Rugby Varese",campo:"Campo Aldo Levi (Giubiano)",indirizzo:"Via Salvore 9, 21100 Varese",squadra:"Giochiamo insieme all'Amatori Tradate",note:"Il Rugby Varese usa più campi: prima di partire controllate l'indirizzo esatto.",portare:"",casa:false,daDefinire:false},
- {titolo:"Giornata 5",data:"2026-12-12",giorni:"",ora:"15:30",oraNota:"inizio gare, di sabato",luogo:"Gattico",ospita:"Rugby Gattico",campo:"Campo sportivo di Gattico",indirizzo:"Via Mazzini, 28013 Gattico NO",squadra:"Squadra Valcuvia (sq. N.C.)",note:"",portare:"",casa:false,daDefinire:false},
+ {titolo:"Giornata 1",contro:"Cinghiali Rugby Cesano Boscone; Rugby Cernusco (2 squadre); Chicken 2012 Rugby; Fennec Fox Rugby (sq. N.C.)",direttore:"Anna Lombardi",data:"2026-10-11",giorni:"",ora:"10:00",oraNota:"inizio gare",luogo:"Cesano Boscone",ospita:"Cinghiali Rugby Cesano Boscone",campo:"Campo Cinghiali Rugby",indirizzo:"Via Don Luigi Sturzo 1A, 20090 Cesano Boscone MI",squadra:"Giochiamo insieme all'Amatori Tradate",note:"",portare:"",casa:false,daDefinire:false},
+ {titolo:"Giornata 2",contro:"US Saronno Rugby; Rosafanti Rugby; Rugby Varese",direttore:"Ilenia Bollini",data:"2026-10-25",giorni:"",ora:"10:30",oraNota:"inizio gare",luogo:"Tradate",ospita:"Amatori Tradate Rugby",campo:"Centro sportivo C. M. Uslenghi",indirizzo:"Via Alfio Fontana, 21049 Tradate VA",squadra:"Giochiamo insieme all'Amatori Tradate",note:"",portare:"",casa:false,daDefinire:false},
+ {titolo:"Giornata 3",contro:"Amatori Rugby Verbania (sq. N.C.); Rugby Oleggio; Rugby Parabiago; Rugby Varese",direttore:"Giuseppe Cattaneo",data:"2026-11-08",giorni:"",ora:"10:30",oraNota:"inizio gare",luogo:"Cassano Valcuvia",ospita:"Rugby Valcuvia",campo:"Campo di via Noga",indirizzo:"Via Noga 525, 21030 Cassano Valcuvia VA",squadra:"Giochiamo insieme all'Amatori Tradate",note:"",portare:"",casa:true,daDefinire:false},
+ {titolo:"Giornata 4",contro:"Rugby Varese; Rugby Como; Rosafanti Rugby",direttore:"Fausto Berton",data:"2026-11-22",giorni:"",ora:"10:00",oraNota:"inizio gare",luogo:"Varese",ospita:"Rugby Varese",campo:"Campo Aldo Levi (Giubiano)",indirizzo:"Via Salvore 9, 21100 Varese",squadra:"Giochiamo insieme all'Amatori Tradate",note:"Il Rugby Varese usa più campi: prima di partire controllate l'indirizzo esatto.",portare:"",casa:false,daDefinire:false},
+ {titolo:"Giornata 5",contro:"Rugby Gattico; Rugby Lainate (2 squadre); Amatori Rugby Verbania (sq. N.C.); Cinghiali Rugby Cesano Boscone; Rugby Oleggio; Rugby Como",direttore:"Matteo Ambroisini",data:"2026-12-12",giorni:"",ora:"15:30",oraNota:"inizio gare, di sabato",luogo:"Gattico",ospita:"Rugby Gattico",campo:"Campo sportivo di Gattico",indirizzo:"Via Mazzini, 28013 Gattico NO",squadra:"Squadra Valcuvia (sq. N.C.)",note:"",portare:"",casa:false,daDefinire:false},
  {titolo:"Giornata 6",data:"2027-01-24",giorni:"23–24",daDefinire:true},
  {titolo:"Giornata 7",data:"2027-02-07",giorni:"6–7",daDefinire:true},
  {titolo:"Giornata 8",data:"2027-02-21",giorni:"20–21",daDefinire:true},
@@ -149,7 +149,7 @@ const ICON_PIN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
 // ---- lettura del foglio (Google Visualization API, via JSONP: nessun problema di CORS) ----
 const norm=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z]/g,"");
 const KEYS={titolo:"titolo",data:"data",weekend:"giorni",orario:"ora",notaorario:"oraNota",localita:"luogo",ospita:"ospita",
-  campo:"campo",indirizzo:"indirizzo",squadra:"squadra",note:"note",daportare:"portare",incasa:"casa",dadefinire:"daDefinire"};
+  campo:"campo",indirizzo:"indirizzo",squadra:"squadra",note:"note",daportare:"portare",incasa:"casa",dadefinire:"daDefinire",contro:"contro",avversari:"contro",direttoreevento:"direttore",direttore:"direttore"};
 const yes=v=>/^(si|sì|x|yes|true|vero|1)$/i.test(String(v||"").trim());
 
 function cellDate(c){
@@ -184,7 +184,8 @@ function fromTable(table){
     out.eventi.push({titolo:titolo||"Appuntamento",data,giorni:cellText(get("giorni")),ora:cellTime(get("ora")),
       oraNota:cellText(get("oraNota")),luogo:cellText(get("luogo")),ospita:cellText(get("ospita")),campo:cellText(get("campo")),
       indirizzo:cellText(get("indirizzo")),squadra:cellText(get("squadra")),note:cellText(get("note")),
-      portare:cellText(get("portare")),casa:yes(cellText(get("casa"))),daDefinire:yes(cellText(get("daDefinire")))});
+      portare:cellText(get("portare")),casa:yes(cellText(get("casa"))),daDefinire:yes(cellText(get("daDefinire"))),
+      contro:cellText(get("contro")),direttore:cellText(get("direttore"))});
   }
   return out;
 }
@@ -231,6 +232,7 @@ function cardHTML(e,isNext){
       <a class="btn primary" href="https://www.google.com/maps/dir/?api=1&destination=${q}" target="_blank" rel="noopener">${ICON_CAR}Indicazioni</a>
       <a class="btn" href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">${ICON_PIN}Mappa</a></div>`:"";
   const bring=bringList(e.portare);
+  const contro=(e.contro||"").split(/[;\n]/).map(s=>s.trim()).filter(Boolean);
   const meta=[e.ospita&&!e.casa?"Ospita "+e.ospita:"",e.squadra].filter(Boolean).join(" · ");
   return `<article class="card${isNext?" next":""}">${dateBlock}<div class="body">
     <div class="top"><span class="gname">${esc(e.titolo)}</span>${badges}</div>
@@ -238,6 +240,8 @@ function cardHTML(e,isNext){
     ${e.ora?`<div class="time">${esc(e.ora)} <span>${esc(e.oraNota)}</span></div>`:""}
     ${e.campo||e.indirizzo?`<p class="addr">${esc([e.campo,e.indirizzo].filter(Boolean).join(" · "))}</p>`:""}
     ${meta?`<p class="meta">${esc(meta)}</p>`:""}
+    ${contro.length?`<p class="bring-h">Contro</p><ul class="bring">${contro.map(b=>`<li>${esc(b)}</li>`).join("")}</ul>`:""}
+    ${e.direttore?`<p class="meta">Direttore di evento: ${esc(e.direttore)}</p>`:""}
     ${e.note?`<p class="note">${esc(e.note)}</p>`:""}
     ${bring.length?`<p class="bring-h">Da portare</p><ul class="bring">${bring.map(b=>`<li>${esc(b)}</li>`).join("")}</ul>`:""}
     ${maps}</div></article>`;
