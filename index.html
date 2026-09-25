@@ -206,6 +206,14 @@ function loadSheet(){
 }
 
 // ---- disegno ----
+// Da portare sempre, a ogni data certa; si aggiungono solo se il foglio non li nomina già.
+const SEMPRE=[{k:"paradent",t:"Paradenti (obbligatorio)"},{k:"tacchett",t:"Scarpe coi tacchetti"}];
+function bringList(portare){
+  const items=(portare||"").split(/[;\n]/).map(s=>s.trim()).filter(Boolean);
+  const low=items.map(s=>s.toLowerCase());
+  SEMPRE.forEach(x=>{if(!low.some(s=>s.includes(x.k)))items.push(x.t);});
+  return items;
+}
 function cardHTML(e,isNext){
   const d=parse(e.data);
   const dateBlock=e.daDefinire||e.giorni
@@ -222,7 +230,7 @@ function cardHTML(e,isNext){
   const maps=q?`<div class="actions">
       <a class="btn primary" href="https://www.google.com/maps/dir/?api=1&destination=${q}" target="_blank" rel="noopener">${ICON_CAR}Indicazioni</a>
       <a class="btn" href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">${ICON_PIN}Mappa</a></div>`:"";
-  const bring=(e.portare||"").split(/[;\n]/).map(s=>s.trim()).filter(Boolean);
+  const bring=bringList(e.portare);
   const meta=[e.ospita&&!e.casa?"Ospita "+e.ospita:"",e.squadra].filter(Boolean).join(" · ");
   return `<article class="card${isNext?" next":""}">${dateBlock}<div class="body">
     <div class="top"><span class="gname">${esc(e.titolo)}</span>${badges}</div>
