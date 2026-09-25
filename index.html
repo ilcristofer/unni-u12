@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calendario Unni U12</title>
+<meta name="description" content="Calendario Under 12 dell'ASD Rugby Valcuvia (Gli Unni), stagione 2026/27: orari, campi e indicazioni.">
+<meta name="theme-color" content="#1E6A45">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-title" content="Unni U12">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F2F5EF; --surface:#FFFFFF; --ink:#16241B; --muted:#5A6B60; --line:#D5DED2;
+  --pitch:#1E6A45; --pitch-soft:#E3EFE6; --accent:#B87400; --accent-soft:#FBF0D9; --warn:#A3321F;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root{color-scheme:dark;
+    --bg:#0E1611; --surface:#16211A; --ink:#E6EEE8; --muted:#9BAEA2; --line:#2A3A30;
+    --pitch:#63C28E; --pitch-soft:#1C3325; --accent:#F0B43C; --accent-soft:#3A2E12; --warn:#F08A76;}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.wrap{max-width:640px;margin:0 auto;padding-inline:16px;padding-block:20px 48px;display:flex;flex-direction:column;gap:24px}
+header{display:flex;flex-direction:column;gap:4px}
+.eyebrow{font-family:var(--display);font-weight:600;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--pitch)}
+h1{font-family:var(--display);font-weight:700;font-size:42px;line-height:1;margin:0}
+.stamp{color:var(--muted);font-size:13px;margin:4px 0 0}
+.stamp.off{color:var(--warn)}
+.avviso{background:var(--accent-soft);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.avviso b{font-family:var(--display);font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.avviso p{margin:0;white-space:pre-line}
+main{display:flex;flex-direction:column;gap:24px}
+section{display:flex;flex-direction:column;gap:12px}
+h2{font-family:var(--display);font-weight:700;font-size:22px;margin:0;color:var(--muted);letter-spacing:.02em}
+.list{display:flex;flex-direction:column;gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;grid-template-columns:62px 1fr;gap:14px}
+.card.next{border:2px solid var(--accent);box-shadow:0 8px 24px -14px rgba(0,0,0,.4)}
+.card.tbd{background:transparent;border-style:dashed}
+.date{display:flex;flex-direction:column;align-items:center;background:var(--pitch-soft);border-radius:10px;padding:8px 0;font-family:var(--display);text-transform:uppercase;height:max-content}
+.tbd .date{background:transparent;border:1px solid var(--line)}
+.date .dow{font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--pitch)}
+.date .day{font-size:32px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.date .day.sm{font-size:21px;line-height:1.3}
+.date .mon{font-size:14px;font-weight:600;letter-spacing:.06em;color:var(--muted)}
+.body{display:flex;flex-direction:column;gap:10px;min-width:0}
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
+.gname{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.badge{font-size:12px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent)}
+.badge.home{background:var(--pitch-soft);color:var(--pitch)}
+.place{font-family:var(--display);font-weight:700;font-size:27px;line-height:1.05;margin:0}
+.tbd .place{font-size:20px;color:var(--muted)}
+.time{font-size:18px;font-weight:600}
+.time span{font-weight:400;color:var(--muted);font-size:15px}
+.addr,.meta{color:var(--muted);font-size:14px;margin:0}
+.note{font-size:15px;background:var(--accent-soft);border-radius:10px;padding:10px 12px;margin:0;white-space:pre-line}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-weight:600;font-size:15px;padding:9px 14px;border-radius:10px;border:1.5px solid var(--pitch);color:var(--pitch)}
+.btn.primary{background:var(--pitch);color:var(--surface)}
+.btn svg{width:16px;height:16px;flex:none}
+.btn:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.bring-h{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:0}
+.bring{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:2px}
+.empty{color:var(--muted);font-size:15px;margin:0}
+details.played summary{cursor:pointer;font-family:var(--display);font-weight:700;font-size:20px;color:var(--muted);padding:4px 0}
+details.played .list{margin-top:12px;opacity:.6}
+footer{color:var(--muted);font-size:13px;display:flex;flex-direction:column;gap:6px}
+footer p{margin:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">ASD Rugby Valcuvia · Gli Unni</div>
+    <h1>Under 12 · 2026/27</h1>
+    <p class="stamp" id="stamp"></p>
+  </header>
+  <div id="avviso"></div>
+  <main id="main"></main>
+  <footer>
+    <p>Per avere la pagina sempre a portata di mano: dal browser del telefono scegli «Aggiungi a schermata Home».</p>
+    <p>La pagina controlla da sola gli aggiornamenti ogni pochi minuti.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+const SHEET_ID="16f1Rc6MM6g1Hd9vA8KOx1waBGLVEicSJ1ToB8crQlLs";
+const REFRESH_MS=5*60*1000;
+
+// Copia di riserva: usata solo se il foglio non si raggiunge e non c'è una copia salvata sul telefono.
+const FALLBACK={avviso:"",eventi:[
+ {titolo:"Prima partita",data:"2026-09-26",giorni:"",ora:"14:30",oraNota:"ritrovo in campo, già cambiati",luogo:"Gattico",ospita:"Rugby Gattico",campo:"Campo sportivo di Gattico",indirizzo:"Via Mazzini, 28013 Gattico NO",squadra:"",note:"Calcolate voi quanto prima arrivare per essere pronti in campo alle 14:30. La società dà solo la maglietta da gioco.",portare:"Pantaloncini; Calzettoni; Paradenti (obbligatorio); Scarpe coi tacchetti; Documento d'identità (è la prima partita)",casa:false,daDefinire:false},
+ {titolo:"Giornata 1",data:"2026-10-11",giorni:"",ora:"10:00",oraNota:"inizio gare",luogo:"Cesano Boscone",ospita:"Cinghiali Rugby Cesano Boscone",campo:"Campo Cinghiali Rugby",indirizzo:"Via Don Luigi Sturzo 1A, 20090 Cesano Boscone MI",squadra:"Giochiamo insieme all'Amatori Tradate",note:"",portare:"",casa:false,daDefinire:false},
+ {titolo:"Giornata 2",data:"2026-10-25",giorni:"",ora:"10:30",oraNota:"inizio gare",luogo:"Tradate",ospita:"Amatori Tradate Rugby",campo:"Centro sportivo C. M. Uslenghi",indirizzo:"Via Alfio Fontana, 21049 Tradate VA",squadra:"Giochiamo insieme all'Amatori Tradate",note:"",portare:"",casa:false,daDefinire:false},
+ {titolo:"Giornata 3",data:"2026-11-08",giorni:"",ora:"10:30",oraNota:"inizio gare",luogo:"Cassano Valcuvia",ospita:"Rugby Valcuvia",campo:"Campo di via Noga",indirizzo:"Via Noga 525, 21030 Cassano Valcuvia VA",squadra:"Giochiamo insieme all'Amatori Tradate",note:"",portare:"",casa:true,daDefinire:false},
+ {titolo:"Giornata 4",data:"2026-11-22",giorni:"",ora:"10:00",oraNota:"inizio gare",luogo:"Varese",ospita:"Rugby Varese",campo:"Campo Aldo Levi (Giubiano)",indirizzo:"Via Salvore 9, 21100 Varese",squadra:"Giochiamo insieme all'Amatori Tradate",note:"Il Rugby Varese usa più campi: prima di partire controllate l'indirizzo esatto.",portare:"",casa:false,daDefinire:false},
+ {titolo:"Giornata 5",data:"2026-12-12",giorni:"",ora:"15:30",oraNota:"inizio gare, di sabato",luogo:"Gattico",ospita:"Rugby Gattico",campo:"Campo sportivo di Gattico",indirizzo:"Via Mazzini, 28013 Gattico NO",squadra:"Squadra Valcuvia (sq. N.C.)",note:"",portare:"",casa:false,daDefinire:false},
+ {titolo:"Giornata 6",data:"2027-01-24",giorni:"23–24",daDefinire:true},
+ {titolo:"Giornata 7",data:"2027-02-07",giorni:"6–7",daDefinire:true},
+ {titolo:"Giornata 8",data:"2027-02-21",giorni:"20–21",daDefinire:true},
+ {titolo:"Giornata 9",data:"2027-03-07",giorni:"6–7",daDefinire:true},
+ {titolo:"Giornata 10",data:"2027-03-21",giorni:"20–21",daDefinire:true},
+ {titolo:"Giornata 11",data:"2027-04-11",giorni:"10–11",daDefinire:true}
+]};
+
+const DOW=["dom","lun","mar","mer","gio","ven","sab"];
+const MON=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+const MONL=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+const pad=n=>String(n).padStart(2,"0");
+const parse=s=>{const[y,m,d]=(s||"").split("-").map(Number);return new Date(y||2000,(m||1)-1,d||1)};
+const todayD=()=>{const t=new Date();return new Date(t.getFullYear(),t.getMonth(),t.getDate())};
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ICON_CAR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>';
+const ICON_PIN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
+
+// ---- lettura del foglio (Google Visualization API, via JSONP: nessun problema di CORS) ----
+const norm=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z]/g,"");
+const KEYS={titolo:"titolo",data:"data",weekend:"giorni",orario:"ora",notaorario:"oraNota",localita:"luogo",ospita:"ospita",
+  campo:"campo",indirizzo:"indirizzo",squadra:"squadra",note:"note",daportare:"portare",incasa:"casa",dadefinire:"daDefinire"};
+const yes=v=>/^(si|sì|x|yes|true|vero|1)$/i.test(String(v||"").trim());
+
+function cellDate(c){
+  if(!c||c.v==null)return "";
+  const m=/^Date\((\d+),(\d+),(\d+)/.exec(c.v);
+  if(m)return `${m[1]}-${pad(+m[2]+1)}-${pad(m[3])}`;
+  const s=String(c.f||c.v).trim();
+  let r=/^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(s); if(r)return `${r[1]}-${pad(r[2])}-${pad(r[3])}`;
+  r=/^(\d{1,2})[\/.](\d{1,2})[\/.](\d{4})$/.exec(s); if(r)return `${r[3]}-${pad(r[2])}-${pad(r[1])}`;
+  return "";
+}
+function cellTime(c){
+  if(!c||c.v==null)return "";
+  if(Array.isArray(c.v))return `${c.v[0]}:${pad(c.v[1]||0)}`;
+  const m=/^Date\(\d+,\d+,\d+,(\d+),(\d+)/.exec(c.v); if(m)return `${m[1]}:${pad(m[2])}`;
+  return String(c.f||c.v).trim();
+}
+function cellText(c){ if(!c)return ""; return String(c.f!=null?c.f:(c.v==null?"":c.v)).trim(); }
+
+function fromTable(table){
+  const idx={};
+  table.cols.forEach((col,i)=>{const k=KEYS[norm(col.label)]; if(k&&idx[k]==null)idx[k]=i;});
+  if(idx.titolo==null||idx.data==null) throw new Error("intestazioni mancanti");
+  const out={avviso:"",eventi:[]};
+  for(const row of table.rows){
+    const c=row.c||[]; const get=k=>idx[k]==null?null:c[idx[k]];
+    const titolo=cellText(get("titolo"));
+    if(/^avviso$/i.test(titolo)){ out.avviso=cellText(get("note")); continue; }
+    const data=cellDate(get("data"));
+    if(!titolo&&!data)continue;
+    if(!data)continue;
+    out.eventi.push({titolo:titolo||"Appuntamento",data,giorni:cellText(get("giorni")),ora:cellTime(get("ora")),
+      oraNota:cellText(get("oraNota")),luogo:cellText(get("luogo")),ospita:cellText(get("ospita")),campo:cellText(get("campo")),
+      indirizzo:cellText(get("indirizzo")),squadra:cellText(get("squadra")),note:cellText(get("note")),
+      portare:cellText(get("portare")),casa:yes(cellText(get("casa"))),daDefinire:yes(cellText(get("daDefinire")))});
+  }
+  return out;
+}
+
+let seq=0;
+function loadSheet(){
+  return new Promise((resolve,reject)=>{
+    const cb="__unni"+(++seq)+"_"+Date.now();
+    const s=document.createElement("script");
+    const done=()=>{delete window[cb];s.remove();clearTimeout(t);};
+    const t=setTimeout(()=>{done();reject(new Error("timeout"));},15000);
+    window[cb]=resp=>{done();
+      if(!resp||resp.status==="error"||!resp.table){reject(new Error("risposta non valida"));return}
+      try{resolve(fromTable(resp.table))}catch(e){reject(e)}};
+    s.onerror=()=>{done();reject(new Error("rete"));};
+    s.src=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=0&headers=1&tqx=out:json;responseHandler:${cb}&_=${Date.now()}`;
+    document.head.appendChild(s);
+  });
+}
+
+// ---- disegno ----
+function cardHTML(e,isNext){
+  const d=parse(e.data);
+  const dateBlock=e.daDefinire||e.giorni
+    ?`<div class="date"><span class="dow">sab/dom</span><span class="day sm">${esc(e.giorni||d.getDate())}</span><span class="mon">${MON[d.getMonth()]}</span></div>`
+    :`<div class="date"><span class="dow">${DOW[d.getDay()]}</span><span class="day">${d.getDate()}</span><span class="mon">${MON[d.getMonth()]}</span></div>`;
+  const badges=(isNext?'<span class="badge">Prossimo</span>':"")+(e.casa?'<span class="badge home">In casa</span>':"");
+  if(e.daDefinire){
+    return `<article class="card tbd">${dateBlock}<div class="body">
+      <div class="top"><span class="gname">${esc(e.titolo)}</span>${badges}</div>
+      <p class="place">${esc(e.giorni?e.giorni+" ":"")}${MONL[d.getMonth()]} ${d.getFullYear()}</p>
+      <p class="empty">Campo e orario non ancora comunicati.</p></div></article>`;
+  }
+  const q=encodeURIComponent(e.indirizzo||e.campo||e.luogo||"");
+  const maps=q?`<div class="actions">
+      <a class="btn primary" href="https://www.google.com/maps/dir/?api=1&destination=${q}" target="_blank" rel="noopener">${ICON_CAR}Indicazioni</a>
+      <a class="btn" href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">${ICON_PIN}Mappa</a></div>`:"";
+  const bring=(e.portare||"").split(/[;\n]/).map(s=>s.trim()).filter(Boolean);
+  const meta=[e.ospita&&!e.casa?"Ospita "+e.ospita:"",e.squadra].filter(Boolean).join(" · ");
+  return `<article class="card${isNext?" next":""}">${dateBlock}<div class="body">
+    <div class="top"><span class="gname">${esc(e.titolo)}</span>${badges}</div>
+    <p class="place">${esc(e.luogo)}</p>
+    ${e.ora?`<div class="time">${esc(e.ora)} <span>${esc(e.oraNota)}</span></div>`:""}
+    ${e.campo||e.indirizzo?`<p class="addr">${esc([e.campo,e.indirizzo].filter(Boolean).join(" · "))}</p>`:""}
+    ${meta?`<p class="meta">${esc(meta)}</p>`:""}
+    ${e.note?`<p class="note">${esc(e.note)}</p>`:""}
+    ${bring.length?`<p class="bring-h">Da portare</p><ul class="bring">${bring.map(b=>`<li>${esc(b)}</li>`).join("")}</ul>`:""}
+    ${maps}</div></article>`;
+}
+
+let DATA=null, openPlayed=false;
+function render(){
+  const today=todayD();
+  const ev=[...DATA.eventi].sort((a,b)=>a.data.localeCompare(b.data));
+  const upcoming=ev.filter(e=>parse(e.data)>=today), played=ev.filter(e=>parse(e.data)<today);
+  const next=upcoming.find(e=>!e.daDefinire);
+  const conf=upcoming.filter(e=>!e.daDefinire), tbd=upcoming.filter(e=>e.daDefinire);
+  document.getElementById("avviso").innerHTML=DATA.avviso?`<div class="avviso"><b>Avviso</b><p>${esc(DATA.avviso)}</p></div>`:"";
+  const det=document.querySelector("details.played"); if(det)openPlayed=det.open;
+  let h="";
+  if(conf.length)h+=`<section><h2>In programma</h2><div class="list">${conf.map(e=>cardHTML(e,e===next)).join("")}</div></section>`;
+  if(tbd.length)h+=`<section><h2>Da definire</h2><div class="list">${tbd.map(e=>cardHTML(e,false)).join("")}</div></section>`;
+  if(played.length)h+=`<details class="played"${openPlayed?" open":""}><summary>Già giocate (${played.length})</summary><div class="list">${played.map(e=>cardHTML(e,false)).join("")}</div></details>`;
+  if(!h)h='<p class="empty">Nessun appuntamento in calendario.</p>';
+  document.getElementById("main").innerHTML=h;
+}
+function stamp(text,off){const s=document.getElementById("stamp");s.textContent=text;s.className="stamp"+(off?" off":"");}
+const hhmm=d=>`${d.getHours()}:${pad(d.getMinutes())}`;
+const dayStr=d=>`${d.getDate()} ${MONL[d.getMonth()]}`;
+
+// avvio: prima la copia salvata sul telefono (o quella di riserva), poi il foglio
+let cached=null;
+try{cached=JSON.parse(localStorage.getItem("unni-u12")||"null")}catch(e){}
+DATA=cached&&cached.data?cached.data:FALLBACK;
+render();
+stamp("Controllo gli aggiornamenti…");
+
+let lastOk=cached&&cached.at?new Date(cached.at):null;
+async function refresh(){
+  try{
+    const d=await loadSheet();
+    DATA=d; lastOk=new Date(); render();
+    try{localStorage.setItem("unni-u12",JSON.stringify({at:lastOk.toISOString(),data:d}))}catch(e){}
+    stamp(`Aggiornato alle ${hhmm(lastOk)}`);
+  }catch(err){
+    stamp(lastOk?`Non riesco a controllare gli aggiornamenti. Dati del ${dayStr(lastOk)} alle ${hhmm(lastOk)}.`
+               :"Non riesco a controllare gli aggiornamenti. Riprova tra poco.",true);
+  }
+}
+refresh();
+setInterval(()=>{if(document.visibilityState==="visible")refresh()},REFRESH_MS);
+document.addEventListener("visibilitychange",()=>{
+  if(document.visibilityState==="visible"&&(!lastOk||Date.now()-lastOk>60000))refresh();
+});
+})();
+</script>
+</body>
+</html>
